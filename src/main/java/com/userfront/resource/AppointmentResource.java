@@ -16,7 +16,6 @@ import com.userfront.dao.NewDao;
 @RequestMapping("/api/appointment")
 @PreAuthorize("hasRole('ADMIN')")
 public class AppointmentResource {
-    private NewDao newDao;
 
     @Autowired
     private AppointmentService appointmentService;

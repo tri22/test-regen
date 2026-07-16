@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.userfront.domain.Appointment;
 import com.userfront.service.AppointmentService;
 
-@RestController
-@RequestMapping("/api/appointment")
-@PreAuthorize("hasRole('ADMIN')")
 public class AppointmentResource {
 
     @Autowired

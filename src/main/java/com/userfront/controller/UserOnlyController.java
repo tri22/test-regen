@@ -18,6 +18,9 @@ public class UserOnlyController {
     public User getUser() {
         return user;
     }
-
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public User updateUser(User user) {
+        return user;
+    }
 
 }

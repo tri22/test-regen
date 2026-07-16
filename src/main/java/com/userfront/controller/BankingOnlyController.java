@@ -1,0 +1,42 @@
+package com.userfront.controller;
+
+import java.security.Principal;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.userfront.service.AccountService;
+import com.userfront.service.BankingSqlService;
+
+@Controller
+@RequestMapping("/banking-only")
+public class BankingOnlyController {
+
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private BankingSqlService bankingSqlService;
+
+    @RequestMapping(value = "/deposit", method = RequestMethod.GET)
+    public String deposit(Model model) {
+        model.addAttribute("accountType", "");
+        model.addAttribute("amount", "");
+        return "deposit";
+    }
+
+    @RequestMapping(value = "/deposit", method = RequestMethod.POST)
+    public String depositPOST(@ModelAttribute("amount") String amount,
+            @ModelAttribute("accountType") String accountType, Principal principal) {
+        if (accountType.equalsIgnoreCase("Primary")) {
+            bankingSqlService.depositPrimaryViaProcedure(principal, Double.parseDouble(amount));
+        } else {
+            accountService.deposit(accountType, Double.parseDouble(amount), principal);
+        }
+        return "redirect:/userFront";
+    }
+}

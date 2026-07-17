@@ -6,21 +6,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.userfront.service.AccountService;
+import com.userfront.dao.Balance;
+import com.userfront.service.BankingService;
 
 @Controller
 @RequestMapping("/banking-only")
 public class BankingOnlyController {
 
     @Autowired
-    private AccountService accountService;
+    private BankingService bankingService;
 
-    @RequestMapping(value = "/deposit", method = RequestMethod.GET)
-    public String deposit(Model model) {
-        model.addAttribute("accountType", "");
-        model.addAttribute("amount", "");
-        return "deposit";
+    @RequestMapping(value = "/check-balance", method = RequestMethod.GET)
+    public String checkBalance(Model model) {
+        bankingService.checkBalance(new Balance(1000));
+        return "check-balance";
     }
-
-
 }
